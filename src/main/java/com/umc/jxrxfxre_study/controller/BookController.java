@@ -4,6 +4,7 @@ import com.umc.jxrxfxre_study.dto.BookResponse;
 import com.umc.jxrxfxre_study.dto.CreateBookRequest;
 import com.umc.jxrxfxre_study.service.BookService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,11 @@ public class BookController {
     @GetMapping
     public List<BookResponse> getBooks() {
         return bookService.getBooks();
+    }
+
+    @GetMapping(params = "keyword")
+    public List<BookResponse> getBooksByKeyword(@RequestParam("keyword") @NotBlank String titleContaining) {
+        return bookService.getBooksByKeyword(titleContaining);
     }
 
     @PostMapping

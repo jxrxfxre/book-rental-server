@@ -24,6 +24,12 @@ public class BookService {
                 .map(BookResponse::from).toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<BookResponse> getBooksByKeyword(String titleContaining) {
+        return bookRepository.findByTitleContainingOrderByBookIdDesc(titleContaining).stream()
+                .map(BookResponse::from).toList();
+    }
+
     @Transactional
     public BookResponse createBook(CreateBookRequest request) {
         Category category = categoryRepository.findById(request.categoryId())
